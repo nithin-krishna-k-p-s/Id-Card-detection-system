@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ID Card Detection System</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.18.0/dist/ort.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>ID Card Detection System</h1>
+            <p class="subtitle">Real-time ID card and lanyard detection with alarm system</p>
+        </header>
+
+        <div class="controls">
+            <div class="control-group">
+                <h2>Input Source</h2>
+                <div class="button-group">
+                    <button id="webcamBtn" class="btn btn-primary">📷 Webcam</button>
+                    <button id="imageBtn" class="btn btn-secondary">📁 Upload Image</button>
+                    <button id="videoBtn" class="btn btn-secondary">🎬 Upload Video</button>
+                </div>
+                <input type="file" id="imageInput" accept="image/*" style="display: none;">
+                <input type="file" id="videoInput" accept="video/*" style="display: none;">
+            </div>
+
+            <div class="control-group">
+                <h2>Detection Settings</h2>
+                <div class="setting">
+                    <label for="confidenceThreshold">Confidence Threshold:</label>
+                    <input type="range" id="confidenceThreshold" min="0" max="100" value="50">
+                    <span id="confidenceValue">50%</span>
+                </div>
+                <div class="setting">
+                    <label for="alarmToggle">
+                        <input type="checkbox" id="alarmToggle" checked>
+                        Enable Alarm for Missing ID Card
+                    </label>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <h2>Actions</h2>
+                <button id="startBtn" class="btn btn-success" disabled>▶ Start Detection</button>
+                <button id="stopBtn" class="btn btn-danger" disabled>⏹ Stop Detection</button>
+            </div>
+        </div>
+
+        <div class="detection-area">
+            <div class="video-container">
+                <video id="videoElement" autoplay playsinline></video>
+                <canvas id="canvasElement"></canvas>
+                <div id="placeholder" class="placeholder">
+                    <p>Select an input source to begin detection</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="status-panel">
+            <div class="status-item">
+                <span class="status-label">Status:</span>
+                <span id="statusText" class="status-value">Ready</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">ID Cards Detected:</span>
+                <span id="idCardCount" class="status-value">0</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Lanyards Detected:</span>
+                <span id="lanyardCount" class="status-value">0</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">Alarm Status:</span>
+                <span id="alarmStatus" class="status-value status-ok">OK</span>
+            </div>
+        </div>
+
+        <div class="detection-log">
+            <h2>Detection Log</h2>
+            <div id="logContainer" class="log-container">
+                <p class="log-entry">System initialized. Ready for detection.</p>
+            </div>
+        </div>
+    </div>
+
+    <audio id="alarmSound" preload="auto">
+        <source src="alarm.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="app.js"></script>
+</body>
+</html>
