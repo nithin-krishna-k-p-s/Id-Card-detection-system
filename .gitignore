@@ -24,9 +24,9 @@ wheels/
 *.egg
 
 # Model files (keep .pt but ignore large intermediate files)
-*.pt
-*.pth
-*.onnx
+# *.pt
+# *.pth
+# *.onnx
 
 # IDE
 .vscode/
